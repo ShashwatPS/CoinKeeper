@@ -61,6 +61,7 @@ export default function Home() {
         Generate Ethereum Key Pair
       </button>
       <br/>
+      <p>{account.map(({ publicKey, privateKey }) => `${publicKey} ${privateKey}`).join("\n")}</p>
       <p>{mnemonic}</p>
       <p>{seed}</p>
     </div>
