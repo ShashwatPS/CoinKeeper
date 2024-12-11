@@ -5,6 +5,9 @@ import { Keypair } from '@solana/web3.js';
 import { HDNodeWallet, Wallet } from 'ethers';
 import bs58 from 'bs58';
 
+let SOLANA_INDEX = 0;
+let ETHEREUM_INDEX = 0;
+
 interface WalletProps {
     mnemonic: string;
 }
@@ -25,9 +28,8 @@ const generateWallet = async (mnemonic: string): Promise<WalletProps> => {
 }
 
 const SolanaKeyPair = (mnemonic: string): KeypairProps => {
-    let number: number = 0;
-    const path = `m/44'/501'/${number}'/0'`;
-    number = number + 1;
+    const path = `m/44'/501'/${SOLANA_INDEX}'/0'`;
+    SOLANA_INDEX = SOLANA_INDEX + 1;
     const seed = mnemonicToSeedSync(mnemonic).toString("hex");
     const derivedSeed = derivePath(path, seed).key;
     const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
@@ -37,9 +39,8 @@ const SolanaKeyPair = (mnemonic: string): KeypairProps => {
 }
 
 const EthereumKeyPair = (mnemonic: string): KeypairProps => {
-    let number: number = 0;
-    const path = `m/44'/60'/${number}'`;
-    number = number + 1;
+    const path = `m/44'/60'/${ETHEREUM_INDEX}'`;
+    ETHEREUM_INDEX = ETHEREUM_INDEX + 1;
     const seed1 = mnemonicToSeedSync(mnemonic);
     const hdNode = HDNodeWallet.fromSeed(seed1);
     const child = hdNode.derivePath(path);

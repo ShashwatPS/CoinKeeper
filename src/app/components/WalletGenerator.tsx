@@ -1,42 +1,45 @@
 import React, { useState } from "react";
-import {generateWallet, EthereumKeyPair, SolanaKeyPair} from '../utils/walletUtils';
+import { generateWallet, EthereumKeyPair, SolanaKeyPair } from '../utils/walletUtils';
 
 interface WalletGeneratorProps {
-    blockchain: string;
-    addAccount: (account: { publicKey: string, privateKey: string }) => void;
+  blockchain: string;
+  addAccount: (account: { publicKey: string, privateKey: string }) => void;
+  onMnemonicGenerated: () => void;
 }
 
-const WalletGenerator: React.FC<WalletGeneratorProps> = ({ blockchain, addAccount }) => {
-    const [mnemonic, setMnemonic] = useState<string | null>(null);
+const WalletGenerator: React.FC<WalletGeneratorProps> = ({ blockchain, addAccount, onMnemonicGenerated }) => {
+  const [mnemonic, setMnemonic] = useState<string | null>(null);
 
-    const generateWalletSeed = async () => {
-        const walletProps = await generateWallet("");
-        setMnemonic(walletProps.mnemonic);
-    }
+  const generateWalletSeed = async () => {
+    const walletProps = await generateWallet("");
+    setMnemonic(walletProps.mnemonic);
+    onMnemonicGenerated();
+  };
 
-    const generateSolanaKeyPair = () => {
-        const keypair = SolanaKeyPair(mnemonic!);
-        addAccount(keypair);    
-    }
+  const generateSolanaKeyPair = () => {
+    const keypair = SolanaKeyPair(mnemonic!);
+    addAccount(keypair);
+  };
 
-    const generateEthereumKeyPair = () => {
-        const keypair = EthereumKeyPair(mnemonic!);
-        addAccount(keypair);
-    }
+  const generateEthereumKeyPair = () => {
+    const keypair = EthereumKeyPair(mnemonic!);
+    addAccount(keypair);
+  };
 
-    return (
-        <>
-            {!mnemonic ? (<button onClick={generateWalletSeed}>Generate Wallet Seed</button>) :
-                (
-                    <div>
-                        <p><strong>Mnemonic:</strong> {mnemonic}</p>
-                        <button onClick={blockchain === 'solana' ? generateSolanaKeyPair : generateEthereumKeyPair}>
-                            Generate {blockchain} Wallet
-                        </button>
-                    </div>
-                )}
-        </>
-    )
-}
+  return (
+    <>
+      {!mnemonic ? (
+        <button onClick={generateWalletSeed}>Generate Wallet Seed</button>
+      ) : (
+        <div>
+          <p><strong>Mnemonic:</strong> {mnemonic}</p>
+          <button onClick={blockchain === 'solana' ? generateSolanaKeyPair : generateEthereumKeyPair}>
+            Generate {blockchain} Wallet
+          </button>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default WalletGenerator;
