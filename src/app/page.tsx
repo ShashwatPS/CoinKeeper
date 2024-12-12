@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <div className='max-w-7xl mx-auto flex flex-col gap-4 px-14 min-h-[92vh] py-4'>
       <div className='flex items-center py-1'>
-        <img src='HEY.png' alt='Logo' className='h-20 w-20 mr-1' />
+        <img src='hey.svg' alt='Logo' className='h-20 w-20 mr-1' />
         <h1 className='text-xl font-semibold'>CoinKeeper</h1>
       </div>
       {!selectedBlockchain ? (
