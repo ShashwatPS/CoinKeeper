@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import BlockchainSelector from './components/BlockchainSelector';
 import WalletGenerator from './components/WalletGenerator';
-import WalletImporter from './components/WalletImporter';
+import { SolanaKeyPair, EthereumKeyPair, resetCounter } from './utils/walletUtils';
 import AccountList from './components/AccountList';
 
 export default function HomePage() {
   const [selectedBlockchain, setSelectedBlockchain] = useState<string | null>(null);
-  const [mnemonicAction, setMnemonicAction] = useState<string | null>(null);
+  const [mnemonic, setMnemonic] = useState<string | null>(null);
   const [mnemonicGenerated, setMnemonicGenerated] = useState<boolean>(false);
   const [accounts, setAccounts] = useState<{ publicKey: string, privateKey: string }[]>([]);
 
@@ -16,9 +16,27 @@ export default function HomePage() {
     setAccounts((prevAccounts) => [...prevAccounts, account]);
   };
 
-  const handleGenerateMnemonic = () => {
-    setMnemonicAction('generate');
+  const handleGenerateOrImportMnemonic = (inputMnemonic: string) => {
+    setMnemonic(inputMnemonic || null);
     setMnemonicGenerated(true);
+  };
+
+  const ClearAccounts = () => {
+    setMnemonicGenerated(false);
+    setSelectedBlockchain(null);
+    setMnemonic(null);
+    setAccounts([]);
+    resetCounter();
+  };
+
+  const handleAddAnotherAccount = () => {
+    if (selectedBlockchain === 'solana') {
+      const generatedKeypair = SolanaKeyPair(mnemonic!);
+      addAccount(generatedKeypair);
+    } else if (selectedBlockchain === 'ethereum') {
+      const generatedKeypair = EthereumKeyPair(mnemonic!);
+      addAccount(generatedKeypair);
+    }
   };
 
   return (
@@ -29,31 +47,38 @@ export default function HomePage() {
       </div>
       {!selectedBlockchain ? (
         <BlockchainSelector selectBlockchain={setSelectedBlockchain} />
-      ) : !mnemonicAction ? (
-        <div>
-          <h3 className='text-xl font-semibold'>Selected Blockchain: {selectedBlockchain}</h3>
-          <div className='flex flex-row gap-4 pt-12'>
-          <button className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200" onClick={handleGenerateMnemonic}>Generate</button>
-          <button className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200" onClick={() => setMnemonicAction('import')}>Import</button>
-          </div>
-        </div>
       ) : (
         <div>
-          {mnemonicAction === 'generate' ? (
+          {!mnemonicGenerated ? (
             <WalletGenerator
               blockchain={selectedBlockchain}
               addAccount={addAccount}
-              onMnemonicGenerated={() => setMnemonicGenerated(true)}
+              onMnemonicGenerated={handleGenerateOrImportMnemonic}
+              mnemonic={mnemonic}
             />
           ) : (
-            <WalletImporter blockchain={selectedBlockchain} addAccount={addAccount} />
-          )}  
+            <>
+              <h3 className='text-xl font-semibold'>Mnemonic: {mnemonic}</h3>
+              <AccountList accounts={accounts} />
+              <button 
+                className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200 mt-4"
+                onClick={handleAddAnotherAccount}
+              >
+                Add Another Account
+              </button>
+              <button 
+                className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200 mt-4"
+                onClick={ClearAccounts}
+              >
+                Reset
+              </button>
+            </>
+          )}
         </div>
       )}
-      {mnemonicGenerated && <AccountList accounts={accounts} />}
-        <div className="item last mt-auto border-t-2 border-slate-50">
-          <h1 className="text-lg pt-5">Made by Shashwat</h1>
-        </div>  
+      <div className="item last mt-auto border-t-2 border-slate-50">
+        <h1 className="text-lg pt-5">Made by Shashwat</h1>
+      </div>  
     </div>
   );
 }

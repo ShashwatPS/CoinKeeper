@@ -5,6 +5,7 @@ import { Keypair } from '@solana/web3.js';
 import { HDNodeWallet, Wallet } from 'ethers';
 import bs58 from 'bs58';
 
+
 let SOLANA_INDEX = 0;
 let ETHEREUM_INDEX = 0;
 
@@ -49,5 +50,10 @@ const EthereumKeyPair = (mnemonic: string): KeypairProps => {
     return { publicKey: wallet.address, privateKey: wallet.privateKey };
 }
 
+const resetCounter = () => {
+    SOLANA_INDEX = 0;
+    ETHEREUM_INDEX = 0;
+}
 
-export {generateWallet, SolanaKeyPair, EthereumKeyPair};
+
+export {generateWallet, SolanaKeyPair, EthereumKeyPair, resetCounter};
