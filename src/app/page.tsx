@@ -59,26 +59,34 @@ export default function HomePage() {
           ) : (
             <>
               <h3 className='text-xl font-semibold'>Mnemonic: {mnemonic}</h3>
+              <div className='flex flex-row justify-between items-center my-7'>
+                <h1 className=' font-bold text-[36px] !important'>{selectedBlockchain.charAt(0).toUpperCase() + selectedBlockchain.slice(1)} Wallet</h1>
+                <div className='flex gap-3 items-center'>
+                  <div>
+
+                  </div>
+                  <button
+                    className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200 mt-4"
+                    onClick={handleAddAnotherAccount}
+                  >
+                    Add Wallet
+                  </button>
+                  <button
+                    className="px-4 py-2 rounded-md bg-red-700 text-white font-semibold text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] transition duration-200 mt-4"
+                    onClick={ClearAccounts}
+                  >
+                    Clear Wallets
+                  </button>
+                </div>
+              </div>
               <AccountList accounts={accounts} />
-              <button 
-                className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200 mt-4"
-                onClick={handleAddAnotherAccount}
-              >
-                Add Another Account
-              </button>
-              <button 
-                className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200 mt-4"
-                onClick={ClearAccounts}
-              >
-                Reset
-              </button>
             </>
           )}
         </div>
       )}
       <div className="item last mt-auto border-t-2 border-slate-50">
         <h1 className="text-lg pt-5">Made by Shashwat</h1>
-      </div>  
+      </div>
     </div>
   );
 }

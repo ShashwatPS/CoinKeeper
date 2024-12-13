@@ -1,4 +1,5 @@
 import React from 'react';
+import WalletCard from './Card';
 
 interface AccountListProps {
   accounts: { publicKey: string, privateKey: string }[];
@@ -6,16 +7,19 @@ interface AccountListProps {
 
 const AccountList: React.FC<AccountListProps> = ({ accounts }) => {
   return (
-    <div>
-      <h3>Accounts</h3>
+    <div >
       {accounts.length === 0 ? (
         <p>No accounts yet.</p>
       ) : (
         <ul>
           {accounts.map((account, index) => (
             <li key={index}>
-              <strong>Public Key:</strong> {account.publicKey} <br />
-              <strong>Private Key:</strong> {account.privateKey}
+              <WalletCard
+                public_key={account.publicKey}
+                private_key={account.privateKey}
+                number={index+1}
+              />
+              <br></br>
             </li>
           ))}
         </ul>

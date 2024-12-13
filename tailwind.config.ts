@@ -12,6 +12,7 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         'textColor': 'rgba(250, 250, 250, 0.8)',
+        'dark-gray': '#181818',
       },
     },
   },
