@@ -1,7 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import EyeIcon from '../../../public/eye.svg';
-import EyeOffIcon from '../../../public/eye-off.svg';
 
 interface WalletCardProps {
     public_key: string;
