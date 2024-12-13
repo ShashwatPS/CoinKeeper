@@ -16,8 +16,13 @@ export default function HomePage() {
     setAccounts((prevAccounts) => [...prevAccounts, account]);
   };
 
+  const handleGenerateMnemonic = () => {
+    setMnemonicAction('generate');
+    setMnemonicGenerated(true);
+  };
+
   return (
-    <div className='max-w-7xl mx-auto flex flex-col gap-4 px-14 min-h-[92vh] py-4'>
+    <div className='max-w mx-auto flex flex-col gap-4 px-12 min-h-[92vh] py-1'>
       <div className='flex items-center py-1'>
         <img src='hey.svg' alt='Logo' className='h-20 w-20 mr-1' />
         <h1 className='text-xl font-semibold'>CoinKeeper</h1>
@@ -26,13 +31,14 @@ export default function HomePage() {
         <BlockchainSelector selectBlockchain={setSelectedBlockchain} />
       ) : !mnemonicAction ? (
         <div>
-          <h3>Selected Blockchain: {selectedBlockchain}</h3>
-          <button onClick={() => setMnemonicAction('generate')}>Generate Mnemonic</button>
-          <button onClick={() => setMnemonicAction('import')}>Import Mnemonic</button>
+          <h3 className='text-xl font-semibold'>Selected Blockchain: {selectedBlockchain}</h3>
+          <div className='flex flex-row gap-4 pt-12'>
+          <button className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200" onClick={handleGenerateMnemonic}>Generate</button>
+          <button className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200" onClick={() => setMnemonicAction('import')}>Import</button>
+          </div>
         </div>
       ) : (
         <div>
-          <h3>Selected Blockchain: {selectedBlockchain}</h3>
           {mnemonicAction === 'generate' ? (
             <WalletGenerator
               blockchain={selectedBlockchain}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { generateWallet, EthereumKeyPair, SolanaKeyPair } from '../utils/walletUtils';
 
 interface WalletGeneratorProps {
@@ -25,6 +25,10 @@ const WalletGenerator: React.FC<WalletGeneratorProps> = ({ blockchain, addAccoun
     const keypair = EthereumKeyPair(mnemonic!);
     addAccount(keypair);
   };
+
+  useEffect(() => {
+    generateWalletSeed();
+  }, []);
 
   return (
     <>
