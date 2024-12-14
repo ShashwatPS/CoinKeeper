@@ -25,15 +25,15 @@ const WalletCard: React.FC<WalletCardProps> = ({ public_key, private_key, number
                     <div className='text-lg md:text-xl font-bold tracking-tighter'>
                         Public Key
                     </div>
-                    <div className='text-textColor truncate'>
+                    <div className='text-textColor truncate hover:text-white'>
                         {public_key}
                     </div>
                 </div>
                 <div className='flex flex-col w-full gap-2 '>
-                    <div className='text-lg md:text-xl font-bold tracking-tighter'>
+                    <div className='text-lg md:text-xl font-bold tracking-tighter hover:text-white'>
                         Private Key
                     </div>
-                    <div className="text-textColor truncate flex justify-between w-full items-center gap-2">
+                    <div className="text-textColor truncate flex justify-between w-full items-center gap-2 hover:text-white">
                         <div className="flex items-center">
                             {isRevealed ? (
                                 <span>{private_key}</span>

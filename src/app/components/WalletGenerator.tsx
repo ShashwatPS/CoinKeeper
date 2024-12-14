@@ -37,7 +37,7 @@ const WalletGenerator: React.FC<WalletGeneratorProps> = ({ blockchain, addAccoun
         {blockchain === 'solana' ? (
           <img src='solana_bg.png' alt='Solana Blockchain' className='h-20 w-20 mr-8' />
         ) : (
-          <img src='ethereum_bg.png' alt='Ethereum Blockchain' className='h-20 w-20 mr-8' />
+          <img src='eth.png' alt='Ethereum Blockchain' className='h-20 w-20 mr-8' />
         )}
       </div>
       <div className="flex flex-row gap-6 items-center mt-2">

@@ -17,7 +17,7 @@ const AccountList: React.FC<AccountListProps> = ({ accounts }) => {
               <WalletCard
                 public_key={account.publicKey}
                 private_key={account.privateKey}
-                number={index+1}
+                number={index}
               />
               <br></br>
             </li>

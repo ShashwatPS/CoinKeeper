@@ -5,6 +5,7 @@ import BlockchainSelector from './components/BlockchainSelector';
 import WalletGenerator from './components/WalletGenerator';
 import { SolanaKeyPair, EthereumKeyPair, resetCounter } from './utils/walletUtils';
 import AccountList from './components/AccountList';
+import ExpandingCard from './components/ExpandingCard';
 
 export default function HomePage() {
   const [selectedBlockchain, setSelectedBlockchain] = useState<string | null>(null);
@@ -58,7 +59,9 @@ export default function HomePage() {
             />
           ) : (
             <>
-              <h3 className='text-xl font-semibold'>Mnemonic: {mnemonic}</h3>
+              <ExpandingCard
+                mnemonic={mnemonic!}
+              />
               <div className='flex flex-row justify-between items-center my-7'>
                 <h1 className=' font-bold text-[36px] !important'>{selectedBlockchain.charAt(0).toUpperCase() + selectedBlockchain.slice(1)} Wallet</h1>
                 <div className='flex gap-3 items-center'>
